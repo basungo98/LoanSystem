@@ -504,7 +504,19 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     }//GEN-LAST:event_jbSaveActionPerformed
 
     private void jbUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateActionPerformed
-        // TODO add your handling code here:
+        String id = tfId.getText();
+        String name = tfName.getText();
+        String provinceName = tfProvince.getText();
+        String cantonName = String.valueOf(cbCanton.getSelectedItem());
+        String districtName = String.valueOf(cbDistrict.getSelectedItem());
+        if(id.isEmpty() || name.isEmpty() || provinceName.isEmpty() || cantonName.isEmpty() || districtName.isEmpty()) {
+            showErrorDialog("Todos los campos son requeridos.");
+        } else {
+            Province province = controller.getProvince(provinceName);
+            Canton canton = controller.getCanton(provinceName, cantonName);
+            District district = controller.getDistrict(provinceName, cantonName, districtName);
+            controller.updateClient(new Client(id, name, province, canton, district));
+        }
     }//GEN-LAST:event_jbUpdateActionPerformed
 
     private void jbSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSearchActionPerformed

@@ -36,6 +36,14 @@ public class Client {
         this.canton = new Canton();
         this.district = new District();
     }
+    
+    public void update(Client client) {
+        this.id = client.getId();
+        this.name = client.getName();
+        this.province = client.getProvince();
+        this.canton = client.getCanton();
+        this.district = client.getDistrict();
+    }
 
     public String getId() {
         return id;

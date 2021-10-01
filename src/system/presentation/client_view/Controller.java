@@ -85,7 +85,6 @@ public class Controller {
             Service.instance().addClient(cliente);
             Service.instance().store();
             model.setClient(new Client());
-            model.setClients(Arrays.asList(cliente));
             model.commit();
         } catch (Exception ex) {
             
@@ -101,7 +100,20 @@ public class Controller {
             model.commit();
         } catch (Exception ex) {
             model.setClient(new Client());
-            model.setClients(new ArrayList<>());
+            model.commit();
+        }
+    }
+    
+    public void updateClient(Client newClient){
+        try {
+            Client client = Service.instance().getClient(newClient.getId());
+            client.update(newClient);
+            model.setClient(client);
+            model.setClients(Arrays.asList(client));
+            model.commit();
+            Service.instance().store();
+        } catch (Exception ex) {
+            model.setClient(new Client());
             model.commit();
         }
     }
