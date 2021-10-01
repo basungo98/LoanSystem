@@ -59,84 +59,14 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     }
     
     @Override
-    public void update(Observable o, Object arg) {
-        Client client = model.getClient();
-        tfId.setText(client.getId());
-        tfName.setText(client.getName());
-        String provinceName = client.getProvince().getName();
-        String cantonName = client.getCanton().getName();
-        String distritoName = client.getDistrict().getName();
-        tfProvince.setText(provinceName);
-        updateCbCantons(provinceName);
-        jlSelectedMap.setIcon(getMapImageIcon(provinceName));
-        cbCanton.setSelectedItem(cantonName);
-        cbDistrict.setSelectedItem(distritoName);
-    }
-    
-    private ImageIcon createImageIcon(String path) {
-        if(path != null && !path.isEmpty()) {
-            return new javax.swing.ImageIcon(getClass().getResource(path));
-        }
-        
-        return null;
-    }
-    
-    private ImageIcon getMapImageIcon(String province) {
-        if(province.equals(PROVINCES[0])) {
-            return createImageIcon("/system/assets/maps/alajuela.png");
-        } else if(province.equals(PROVINCES[1])) {
-            return createImageIcon("/system/assets/maps/cartago.png");
-        } else if(province.equals(PROVINCES[2])) {
-            return createImageIcon("/system/assets/maps/guanacaste.png");
-        } else if(province.equals(PROVINCES[3])) {
-            return createImageIcon("/system/assets/maps/heredia.png");
-        } else if(province.equals(PROVINCES[4])) {
-            return createImageIcon("/system/assets/maps/limon.png");
-        } else if(province.equals(PROVINCES[5])) {
-            return createImageIcon("/system/assets/maps/puntarenas.png");
-        } else if(province.equals(PROVINCES[6])) {
-            return createImageIcon("/system/assets/maps/san-jose.png");
-        }
-        
-        return null;
-    }
-    
-    private void updateCbCantons(String provinceLabel) {
-        cbCanton.removeAllItems();
-        cbDistrict.removeAllItems();
-        if(!provinceLabel.isEmpty()) {
-            List<Canton> cantons = controller.getCantons(provinceLabel);
-            
-            for(int i = 0; i < cantons.size(); i++) {
-                cbCanton.addItem(cantons.get(i).getName());
-            }
-        }
-    }
-    
-    private void updateCbDistricts(String cantonName) {
-        cbDistrict.removeAllItems();
-        if(!cantonName.isEmpty()) {
-            List<District> districts = controller.getDistricts(tfProvince.getText(), cantonName);
-
-            for(int i = 0; i < districts.size(); i++) {
-                cbDistrict.addItem(districts.get(i).getName());
-            }
-        }
-    }
-    
-    private void handleJLabelClicked(String province) {
-        tfProvince.setText(province);
-        jlSelectedMap.setIcon(getMapImageIcon(province));
-        updateCbCantons(province);
-    }
-    
-    private void handleJLabelEntered(String province) {
-        jlFocusMap.setIcon(getMapImageIcon(province));
-    }
-    
-    private void handleJLabelExited() {
-        jlFocusMap.setIcon(null);
-    }
+    public void update(Observable o, Object arg) {}
+//    private ImageIcon createImageIcon(String path) {}
+//    private ImageIcon getMapImageIcon(String province) {}
+//    private void updateCbCantons(String provinceLabel) { }
+//    private void updateCbDistricts(String cantonName) {}
+//    private void handleJLabelClicked(String province) {}
+//    private void handleJLabelEntered(String province) {}
+//    private void handleJLabelExited() {}
     
     public void showErrorDialog(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
@@ -488,19 +418,19 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSaveActionPerformed
-        String id = tfId.getText();
-        String name = tfName.getText();
-        String provinceName = tfProvince.getText();
-        String cantonName = String.valueOf(cbCanton.getSelectedItem());
-        String districtName = String.valueOf(cbDistrict.getSelectedItem());
-        if(id.isEmpty() || name.isEmpty() || provinceName.isEmpty() || cantonName.isEmpty() || districtName.isEmpty()) {
-            showErrorDialog("Todos los campos son requeridos.");
-        } else {
-            Province province = controller.getProvince(provinceName);
-            Canton canton = controller.getCanton(provinceName, cantonName);
-            District district = controller.getDistrict(provinceName, cantonName, districtName);
-            controller.addClient(new Client(id, name, province, canton, district));
-        }
+//        String id = tfId.getText();
+//        String name = tfName.getText();
+//        String provinceName = tfProvince.getText();
+//        String cantonName = String.valueOf(cbCanton.getSelectedItem());
+//        String districtName = String.valueOf(cbDistrict.getSelectedItem());
+//        if(id.isEmpty() || name.isEmpty() || provinceName.isEmpty() || cantonName.isEmpty() || districtName.isEmpty()) {
+//            showErrorDialog("Todos los campos son requeridos.");
+//        } else {
+//            Province province = controller.getProvince(provinceName);
+//            Canton canton = controller.getCanton(provinceName, cantonName);
+//            District district = controller.getDistrict(provinceName, cantonName, districtName);
+//            controller.addClient(new Client(id, name, province, canton, district));
+//        }
     }//GEN-LAST:event_jbSaveActionPerformed
 
     private void jbUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateActionPerformed
@@ -508,12 +438,12 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     }//GEN-LAST:event_jbUpdateActionPerformed
 
     private void jbSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSearchActionPerformed
-        String id = tfId.getText();
-        if(id.isEmpty()) {
-            showErrorDialog("Para buscar un cliente debe digitar la cedula.");
-        } else {
-            controller.getClient(tfId.getText());
-        }
+//        String id = tfId.getText();
+//        if(id.isEmpty()) {
+//            showErrorDialog("Para buscar un cliente debe digitar la cedula.");
+//        } else {
+//            controller.getClient(tfId.getText());
+//        }
         
     }//GEN-LAST:event_jbSearchActionPerformed
 
@@ -522,93 +452,93 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     }//GEN-LAST:event_jbLoanActionPerformed
 
     private void jlGuanacasteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlGuanacasteMouseClicked
-        handleJLabelClicked(jlGuanacaste.getText());
+        //handleJLabelClicked(jlGuanacaste.getText());
     }//GEN-LAST:event_jlGuanacasteMouseClicked
 
     private void jlGuanacasteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlGuanacasteMouseEntered
-        handleJLabelEntered(jlGuanacaste.getText());
+        //handleJLabelEntered(jlGuanacaste.getText());
     }//GEN-LAST:event_jlGuanacasteMouseEntered
 
     private void jlGuanacasteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlGuanacasteMouseExited
-        handleJLabelExited();
+        //handleJLabelExited();
     }//GEN-LAST:event_jlGuanacasteMouseExited
 
     private void jlAlajuelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlAlajuelaMouseClicked
-        handleJLabelClicked(jlAlajuela.getText());
+        //handleJLabelClicked(jlAlajuela.getText());
     }//GEN-LAST:event_jlAlajuelaMouseClicked
 
     private void jlAlajuelaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlAlajuelaMouseEntered
-        handleJLabelEntered(jlAlajuela.getText());
+        //handleJLabelEntered(jlAlajuela.getText());
     }//GEN-LAST:event_jlAlajuelaMouseEntered
 
     private void jlAlajuelaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlAlajuelaMouseExited
-        handleJLabelExited();
+        //handleJLabelExited();
     }//GEN-LAST:event_jlAlajuelaMouseExited
 
     private void jlHerediaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlHerediaMouseClicked
-        handleJLabelClicked(jlHeredia.getText());
+        //handleJLabelClicked(jlHeredia.getText());
     }//GEN-LAST:event_jlHerediaMouseClicked
 
     private void jlHerediaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlHerediaMouseEntered
-        handleJLabelEntered(jlHeredia.getText());
+        //handleJLabelEntered(jlHeredia.getText());
     }//GEN-LAST:event_jlHerediaMouseEntered
 
     private void jlHerediaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlHerediaMouseExited
-        handleJLabelExited();
+        //handleJLabelExited();
     }//GEN-LAST:event_jlHerediaMouseExited
 
     private void jlSanJoseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlSanJoseMouseClicked
-        handleJLabelClicked(jlSanJose.getText());
+        //handleJLabelClicked(jlSanJose.getText());
     }//GEN-LAST:event_jlSanJoseMouseClicked
 
     private void jlSanJoseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlSanJoseMouseEntered
-        handleJLabelEntered(jlSanJose.getText());
+        //handleJLabelEntered(jlSanJose.getText());
     }//GEN-LAST:event_jlSanJoseMouseEntered
 
     private void jlSanJoseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlSanJoseMouseExited
-        handleJLabelExited();
+        //handleJLabelExited();
     }//GEN-LAST:event_jlSanJoseMouseExited
 
     private void jlCartagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlCartagoMouseClicked
-        handleJLabelClicked(jlCartago.getText());
+        //handleJLabelClicked(jlCartago.getText());
     }//GEN-LAST:event_jlCartagoMouseClicked
 
     private void jlCartagoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlCartagoMouseEntered
-        handleJLabelEntered(jlCartago.getText());
+        //handleJLabelEntered(jlCartago.getText());
     }//GEN-LAST:event_jlCartagoMouseEntered
 
     private void jlCartagoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlCartagoMouseExited
-        handleJLabelExited();
+        //handleJLabelExited();
     }//GEN-LAST:event_jlCartagoMouseExited
 
     private void jlLimonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLimonMouseClicked
-        handleJLabelClicked(jlLimon.getText());
+        //handleJLabelClicked(jlLimon.getText());
     }//GEN-LAST:event_jlLimonMouseClicked
 
     private void jlLimonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLimonMouseEntered
-        handleJLabelEntered(jlLimon.getText());
+        //handleJLabelEntered(jlLimon.getText());
     }//GEN-LAST:event_jlLimonMouseEntered
 
     private void jlLimonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLimonMouseExited
-        handleJLabelExited();
+        //handleJLabelExited();
     }//GEN-LAST:event_jlLimonMouseExited
 
     private void jlPuntarenasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlPuntarenasMouseClicked
-        handleJLabelClicked(jlPuntarenas.getText());
+        //handleJLabelClicked(jlPuntarenas.getText());
     }//GEN-LAST:event_jlPuntarenasMouseClicked
 
     private void jlPuntarenasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlPuntarenasMouseEntered
-        handleJLabelEntered(jlPuntarenas.getText());
+        //handleJLabelEntered(jlPuntarenas.getText());
     }//GEN-LAST:event_jlPuntarenasMouseEntered
 
     private void jlPuntarenasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlPuntarenasMouseExited
-        handleJLabelExited();
+        //handleJLabelExited();
     }//GEN-LAST:event_jlPuntarenasMouseExited
 
     private void cbCantonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCantonItemStateChanged
-        if(cbCanton.getSelectedItem() != null) {
-            updateCbDistricts(cbCanton.getSelectedItem().toString());
-        }
+//        if(cbCanton.getSelectedItem() != null) {
+//            updateCbDistricts(cbCanton.getSelectedItem().toString());
+//        }
     }//GEN-LAST:event_cbCantonItemStateChanged
 
     /**
