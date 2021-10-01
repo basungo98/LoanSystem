@@ -20,28 +20,43 @@ public class Service {
     
     public Province getProvince(String provinceName) throws Exception {
         Province province = data.getProvinces().stream().filter(pro->pro.getName().equals(provinceName)).findFirst().orElse(null);
-        if (province != null ) return province;
-        else throw new Exception("No fue posible cargar los datos de provincias.");   
+        if (province != null ) {
+            return province;
+        }
+        else {
+            throw new Exception("No fue posible cargar los datos de provincias.");
+        }   
     }
     
     public List<Province> getProvinces() throws Exception {
         List<Province> provinces = data.getProvinces();
-        if (provinces != null ) return provinces;
-        else throw new Exception("No fue posible cargar los datos de provincias.");   
+        if (provinces != null ) {
+            return provinces;
+        }
+        else {
+            throw new Exception("No fue posible cargar los datos de provincias.");
+        }   
     }
     
      public void addClient(Client cliente) throws Exception{
         Client old = data.getClients().stream().filter(c->c.getId().equals(cliente.getId())).findFirst().orElse(null);
-        if (old == null) data.getClients().add(cliente);
-        else throw new Exception("Cliente ya existe");    
-
-        XmlPersister.instance().store(data);        
+        if (old == null) {
+            data.getClients().add(cliente);
+            XmlPersister.instance().store(data);
+        }
+        else {
+            throw new Exception("Cliente ya existe");
+        }    
     }
      
     public Client getClient(String id) throws Exception{
         Client result = data.getClients().stream().filter(c->c.getId().equals(id)).findFirst().orElse(null);
-        if (result != null) return result;
-        else throw new Exception("Cliente no existe");   
+        if (result != null) {
+            return result;
+        }
+        else {
+            throw new Exception("Cliente no existe");
+        }   
     }
      
     public void store(){
