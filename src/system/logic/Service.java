@@ -58,6 +58,15 @@ public class Service {
             throw new Exception("Cliente no existe");
         }   
     }
+    
+     public boolean userExist(String id) {
+        Client result = data.getClients().stream().filter(c->c.getId().equals(id)).findFirst().orElse(null);
+        if (result == null) {
+            return false;
+        }
+        
+        return true;
+    }
      
     public void store(){
         try {
