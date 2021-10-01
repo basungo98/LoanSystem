@@ -141,6 +141,29 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     public void showErrorDialog(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
+    public void showMessageDialog(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.PLAIN_MESSAGE);
+    }
+    
+
+    
+    private Client createClientInstance() {
+        String id = tfId.getText();
+        String name = tfName.getText();
+        String provinceName = tfProvince.getText();
+        String cantonName = String.valueOf(cbCanton.getSelectedItem());
+        String districtName = String.valueOf(cbDistrict.getSelectedItem());
+        
+        if(id.isEmpty() || name.isEmpty() || provinceName.isEmpty() || cantonName.isEmpty() || districtName.isEmpty()) {
+            showErrorDialog("Todos los campos son requeridos.");
+            return null;
+        } 
+        
+        Province province = controller.getProvince(provinceName);
+        Canton canton = controller.getCanton(provinceName, cantonName);
+        District district = controller.getDistrict(provinceName, cantonName, districtName);
+        return new Client(id, name, province, canton, district);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -489,33 +512,30 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
     private void jbSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSaveActionPerformed
         String id = tfId.getText();
-        String name = tfName.getText();
-        String provinceName = tfProvince.getText();
-        String cantonName = String.valueOf(cbCanton.getSelectedItem());
-        String districtName = String.valueOf(cbDistrict.getSelectedItem());
-        if(id.isEmpty() || name.isEmpty() || provinceName.isEmpty() || cantonName.isEmpty() || districtName.isEmpty()) {
-            showErrorDialog("Todos los campos son requeridos.");
-        } else {
-            Province province = controller.getProvince(provinceName);
-            Canton canton = controller.getCanton(provinceName, cantonName);
-            District district = controller.getDistrict(provinceName, cantonName, districtName);
-            controller.addClient(new Client(id, name, province, canton, district));
+        if (id.isEmpty() || controller.userExist(id)) {
+            showErrorDialog("No fue posible guardar el nuevo usuario.\nVerifique lo siguiente:\n1. El campo de cedula no puede estar vacio.\n2.Ya existe un cliente asociado a este numero de cedula.");
+            return;
+        } 
+        
+        Client client = createClientInstance();
+        if(client != null) {
+            controller.addClient(client);
+            showMessageDialog("El cliente fue creado exitosamente.");
         }
+        
     }//GEN-LAST:event_jbSaveActionPerformed
 
     private void jbUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateActionPerformed
         String id = tfId.getText();
-        String name = tfName.getText();
-        String provinceName = tfProvince.getText();
-        String cantonName = String.valueOf(cbCanton.getSelectedItem());
-        String districtName = String.valueOf(cbDistrict.getSelectedItem());
-        if(id.isEmpty() || name.isEmpty() || provinceName.isEmpty() || cantonName.isEmpty() || districtName.isEmpty()) {
-            showErrorDialog("Todos los campos son requeridos.");
-        } else {
-            Province province = controller.getProvince(provinceName);
-            Canton canton = controller.getCanton(provinceName, cantonName);
-            District district = controller.getDistrict(provinceName, cantonName, districtName);
-            controller.updateClient(new Client(id, name, province, canton, district));
+        if (id.isEmpty() || !controller.userExist(id)) {
+            showErrorDialog("No fue posible completar la actualizacion de datos.\nVerifique lo siguiente:\n1. El campo de cedula no puede estar vacio.\n2.No existe un cliente asociado a este numero de cedula.");
+            return;
+        } 
+        
+        Client client = createClientInstance();
+        if(client != null) {
+            controller.updateClient(client);
+            showMessageDialog("El cliente fue actualizado exitosamente.");
         }
     }//GEN-LAST:event_jbUpdateActionPerformed
 
@@ -523,6 +543,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         String id = tfId.getText();
         if(id.isEmpty()) {
             showErrorDialog("Para buscar un cliente debe digitar la cedula.");
+        } else if(!controller.userExist(id)) {
+            showErrorDialog("No existe un cliente con el numero de cedula: " + id);
         } else {
             controller.getClient(tfId.getText());
         }

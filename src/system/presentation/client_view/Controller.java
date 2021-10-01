@@ -83,9 +83,9 @@ public class Controller {
     public void addClient(Client cliente){
         try {
             Service.instance().addClient(cliente);
-            Service.instance().store();
             model.setClient(new Client());
             model.commit();
+            Service.instance().store();
         } catch (Exception ex) {
             
         }
@@ -96,7 +96,6 @@ public class Controller {
         try {
             Client cliente = Service.instance().getClient(id);
             model.setClient(cliente);
-            model.setClients(Arrays.asList(cliente));
             model.commit();
         } catch (Exception ex) {
             model.setClient(new Client());
@@ -108,14 +107,17 @@ public class Controller {
         try {
             Client client = Service.instance().getClient(newClient.getId());
             client.update(newClient);
-            model.setClient(client);
-            model.setClients(Arrays.asList(client));
+            model.setClient(new Client());
             model.commit();
             Service.instance().store();
         } catch (Exception ex) {
             model.setClient(new Client());
             model.commit();
         }
+    }
+    
+    public boolean userExist(String id) {
+        return Service.instance().userExist(id);
     }
     
     public void show(){
