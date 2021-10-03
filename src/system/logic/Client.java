@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package system.logic;
 
+import java.util.List;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -20,6 +16,7 @@ public class Client {
  Province province;
  Canton canton;
  District district;
+ List<Loan> loan;
 
     public Client(String id, String name, Province province, Canton canton, District district) {
         this.id = id;
@@ -27,6 +24,7 @@ public class Client {
         this.province = province;
         this.canton = canton;
         this.district = district;
+        this.loan = null;
     }
 
     public Client() {
@@ -35,6 +33,7 @@ public class Client {
         this.province = new Province();
         this.canton = new Canton();
         this.district = new District();
+        this.loan = null;
     }
     
     public void update(Client client) {
@@ -85,6 +84,14 @@ public class Client {
         this.district = district;
     }
 
+    public List<Loan> getLoan() {
+        return loan;
+    }
+
+    public void setLoan(List<Loan> loan) {
+        this.loan = loan;
+    }
+    
     
 
     @Override
