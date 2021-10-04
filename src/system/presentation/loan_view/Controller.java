@@ -1,6 +1,7 @@
 package system.presentation.loan_view;
 
 import system.Application;
+import system.logic.Client;
 import system.logic.Service;
 
 public class Controller {
@@ -16,7 +17,23 @@ public class Controller {
         view.setController(this);
     }
     
-    public void show() {
+    public void getClient(String id){
+        try {
+            Client cliente = Service.instance().getClient(id);
+            model.setClient(cliente);
+            model.commit();
+        } catch (Exception ex) {
+            model.setClient(new Client());
+            model.commit();
+        }
+    }
+    
+    public boolean userExist(String id) {
+        return Service.instance().userExist(id);
+    }
+    
+    public void show(String clientId) {
+        this.view.baseConfiguration(clientId);
         this.view.setVisible(true);
     }
     
@@ -27,4 +44,9 @@ public class Controller {
     public void exit() {
         Service.instance().store();
     }
+    
+    public void showClientView(){
+        this.hide();
+        Application.CLIENT_VIEW.show();
+    }    
 }

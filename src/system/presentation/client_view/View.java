@@ -61,16 +61,18 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     @Override
     public void update(Observable o, Object arg) {
         Client client = model.getClient();
-        tfId.setText(client.getId());
-        tfName.setText(client.getName());
-        String provinceName = client.getProvince().getName();
-        String cantonName = client.getCanton().getName();
-        String distritoName = client.getDistrict().getName();
-        tfProvince.setText(provinceName);
-        updateCbCantons(provinceName);
-        jlSelectedMap.setIcon(getMapImageIcon(provinceName));
-        cbCanton.setSelectedItem(cantonName);
-        cbDistrict.setSelectedItem(distritoName);
+        if (client != null) {          
+            tfId.setText(client.getId());
+            tfName.setText(client.getName());
+            String provinceName = client.getProvince().getName();
+            String cantonName = client.getCanton().getName();
+            String distritoName = client.getDistrict().getName();
+            tfProvince.setText(provinceName);
+            updateCbCantons(provinceName);
+            jlSelectedMap.setIcon(getMapImageIcon(provinceName));
+            cbCanton.setSelectedItem(cantonName);
+            cbDistrict.setSelectedItem(distritoName);
+        }
     }
     
     private ImageIcon createImageIcon(String path) {
@@ -141,6 +143,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     public void showErrorDialog(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
+    
     public void showMessageDialog(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.PLAIN_MESSAGE);
     }
@@ -546,13 +549,18 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         } else if(!controller.userExist(id)) {
             showErrorDialog("No existe un cliente con el numero de cedula: " + id);
         } else {
-            controller.getClient(tfId.getText());
+            controller.getClient(id);
         }
         
     }//GEN-LAST:event_jbSearchActionPerformed
 
     private void jbLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLoanActionPerformed
-        // TODO add your handling code here:
+        String id = tfId.getText();
+        if (id.isEmpty() || !controller.userExist(id)) {
+            showErrorDialog("No es posible ver la pantalla de prestamos.\nVerifique lo siguiente:\n1. El campo de cedula no puede estar vacio.\n2.No existe un cliente asociado a este numero de cedula.");
+        } else {
+            controller.showLoanView(id);
+        }
     }//GEN-LAST:event_jbLoanActionPerformed
 
     private void jlGuanacasteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlGuanacasteMouseClicked

@@ -1,10 +1,29 @@
 package system.presentation.loan_view;
 
 import java.util.Observable;
+import javax.swing.JOptionPane;
+import system.logic.Client;
 
 public class View extends javax.swing.JFrame implements java.util.Observer {
     Controller controller;
     Model model;
+    
+    public View() {
+        initComponents();
+    }
+    
+    public void baseConfiguration(String clientId) {
+        if (clientId.isEmpty() || !controller.userExist(clientId)) {
+            showErrorDialog("No es posible ver la pantalla de prestamos.\nVerifique lo siguiente:\n1. El campo de cedula no puede estar vacio.\n2.No existe un cliente asociado a este numero de cedula.");
+            controller.showClientView();
+        } else {
+            controller.getClient(clientId);
+        }
+    }
+    
+    public void showErrorDialog(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
     
     public void setController(Controller controller){
         this.controller=controller;
@@ -25,11 +44,10 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     
     @Override
     public void update(Observable o, Object arg) {
-        
-    }
-    
-    public View() {
-        initComponents();
+        Client client = model.getClient();
+        if (client != null) {
+            // code here
+        }
     }
 
     /**

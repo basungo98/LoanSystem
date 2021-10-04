@@ -15,15 +15,15 @@ public class Application {
         
 //        Loan loan1 = new Loan();
 //        System.out.println(Formulas.monthlyFee(10000, 0.02, 6));
-        Loan loan = new Loan(6, 10000, 0.02, new Date());
-        List<MonthlyPayment> monthlyPayments = loan.getMonthlyPayments();
+//        Loan loan = new Loan(6, 10000, 0.02, new Date());
+//        List<MonthlyPayment> monthlyPayments = loan.getMonthlyPayments();
         
-        loan.payMonthlyPayment();
-        loan.addExtraordinaryPayment(1000);
-        loan.payMonthlyPayment();
-        loan.addExtraordinaryPayment(500);
-        loan.payMonthlyPayment();
-        loan.addExtraordinaryPayment(1500);
+//        loan.payMonthlyPayment();
+//        loan.addExtraordinaryPayment(10000);
+//        loan.payMonthlyPayment();
+//        loan.addExtraordinaryPayment(500);
+//        loan.payMonthlyPayment();
+//        loan.addExtraordinaryPayment(15000);
         
 //        for (int i = 0; i < monthlyPayments.size(); i++) {
 //            MonthlyPayment get = monthlyPayments.get(i);
@@ -34,10 +34,10 @@ public class Application {
 //        loan.addExtraordinaryPayment(1000);
 //        System.out.println("-------------");
         
-       for (int i = 0; i < monthlyPayments.size(); i++) {
-            MonthlyPayment get = monthlyPayments.get(i);
-            System.out.println(get.getNumber() + " " + Math.round(get.getBalance()) + " " + Math.round(get.getInterest()) + " " + Math.round(get.getAmortization()) + " " + get.isPaid());
-        }
+//       for (int i = 0; i < monthlyPayments.size(); i++) {
+//            MonthlyPayment get = monthlyPayments.get(i);
+//            System.out.println(get.getNumber() + " " + Math.round(get.getBalance()) + " " + Math.round(get.getInterest()) + " " + Math.round(get.getAmortization()) + " " + get.isPaid());
+//        }
         
         system.presentation.splash_view.Model splashModel = new system.presentation.splash_view.Model() ;
         system.presentation.splash_view.View splashView = new system.presentation.splash_view.View();
@@ -54,7 +54,7 @@ public class Application {
         system.presentation.loan_view.Controller loanController = new system.presentation.loan_view.Controller(loanModel,loanView);
         LOAN_VIEW = loanController;
 
-//        SPLASH_VIEW.show();
+        SPLASH_VIEW.show();
     }
 
     public static system.presentation.splash_view.Controller SPLASH_VIEW;
