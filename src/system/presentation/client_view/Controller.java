@@ -132,8 +132,8 @@ public class Controller {
         Service.instance().store();
     }
     
-    public void showLoanView(){
+    public void showLoanView(String clientId){
         this.hide();
-        Application.LOAN_VIEW.show();
+        Application.LOAN_VIEW.show(clientId);
     }  
 }
