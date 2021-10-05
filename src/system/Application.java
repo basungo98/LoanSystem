@@ -53,6 +53,16 @@ public class Application {
         system.presentation.loan_view.View loanView = new system.presentation.loan_view.View();
         system.presentation.loan_view.Controller loanController = new system.presentation.loan_view.Controller(loanModel,loanView);
         LOAN_VIEW = loanController;
+        
+        system.presentation.report_view.Model reportModel = new system.presentation.report_view.Model() ;
+        system.presentation.report_view.View reportView = new system.presentation.report_view.View();
+        system.presentation.report_view.Controller reportController = new system.presentation.report_view.Controller(reportModel,reportView);
+        REPORT_VIEW = reportController;
+        
+        system.presentation.monthlyPayment_view.Model monthlyPayment_view = new system.presentation.monthlyPayment_view.Model() ;
+        system.presentation.monthlyPayment_view.View monthlyPaymentView = new system.presentation.monthlyPayment_view.View();
+        system.presentation.monthlyPayment_view.Controller montlyPaymentController = new system.presentation.monthlyPayment_view.Controller(monthlyPayment_view,monthlyPaymentView);
+        MONTHLYPAYMENT_VIEW = montlyPaymentController;
 
         SPLASH_VIEW.show();
     }
@@ -60,5 +70,7 @@ public class Application {
     public static system.presentation.splash_view.Controller SPLASH_VIEW;
     public static system.presentation.client_view.Controller CLIENT_VIEW;
     public static system.presentation.loan_view.Controller LOAN_VIEW;
+    public static system.presentation.report_view.Controller REPORT_VIEW;
+    public static system.presentation.monthlyPayment_view.Controller MONTHLYPAYMENT_VIEW;
 
 }

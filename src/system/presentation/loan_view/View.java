@@ -46,7 +46,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     public void update(Observable o, Object arg) {
         Client client = model.getClient();
         if (client != null) {
-            // code here
+            jlName.setText(client.getName());
         }
     }
 
@@ -60,149 +60,34 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private void initComponents() {
 
         jpMain = new javax.swing.JPanel();
-        jpUserInformation = new javax.swing.JPanel();
-        jlId = new javax.swing.JLabel();
-        jlName = new javax.swing.JLabel();
-        jlProvince = new javax.swing.JLabel();
-        jsConton = new javax.swing.JLabel();
-        jlDistrict = new javax.swing.JLabel();
-        tfId = new javax.swing.JTextField();
-        tfName = new javax.swing.JTextField();
-        tfProvince = new javax.swing.JTextField();
-        cbCanton = new javax.swing.JComboBox<>();
-        cbDistrict = new javax.swing.JComboBox<>();
-        jpButtonGroup = new javax.swing.JPanel();
-        jbSave = new javax.swing.JButton();
-        jbUpdate = new javax.swing.JButton();
-        jbSearch = new javax.swing.JButton();
-        jbLoan = new javax.swing.JButton();
         jpHeader = new javax.swing.JPanel();
         jlTitle = new javax.swing.JLabel();
         jlLogo = new javax.swing.JLabel();
+        jlName = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTLoans = new javax.swing.JTable();
+        jpUserInformation = new javax.swing.JPanel();
+        jlDate = new javax.swing.JLabel();
+        jlTerm = new javax.swing.JLabel();
+        jlInterestRate = new javax.swing.JLabel();
+        jlAmount = new javax.swing.JLabel();
+        tfAmount = new javax.swing.JTextField();
+        cbDay = new javax.swing.JComboBox<>();
+        cbMonth = new javax.swing.JComboBox<>();
+        cbYear = new javax.swing.JComboBox<>();
+        cbTerm = new javax.swing.JComboBox<>();
+        cbInterestRate = new javax.swing.JComboBox<>();
+        jlMonth = new javax.swing.JLabel();
+        jlDay = new javax.swing.JLabel();
+        jlYear = new javax.swing.JLabel();
+        jbCreate = new javax.swing.JButton();
+        jbCreate1 = new javax.swing.JButton();
+        jbBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jpMain.setBackground(new java.awt.Color(238, 248, 255));
         jpMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jpUserInformation.setBackground(new java.awt.Color(238, 248, 255));
-        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información del Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
-
-        jlId.setText("Cedula:");
-
-        jlName.setText("Nombre:");
-
-        jlProvince.setText("Província:");
-        jlProvince.setToolTipText("");
-
-        jsConton.setText("Canton:");
-        jsConton.setToolTipText("");
-
-        jlDistrict.setText("Distrito:");
-        jlDistrict.setToolTipText("");
-
-        cbCanton.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbDistrict.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jpUserInformationLayout = new javax.swing.GroupLayout(jpUserInformation);
-        jpUserInformation.setLayout(jpUserInformationLayout);
-        jpUserInformationLayout.setHorizontalGroup(
-            jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpUserInformationLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jpUserInformationLayout.createSequentialGroup()
-                        .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlName)
-                            .addComponent(jlProvince)
-                            .addComponent(jsConton)
-                            .addComponent(jlDistrict))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cbCanton, 0, 200, Short.MAX_VALUE)
-                                .addComponent(cbDistrict, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(tfProvince, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jpUserInformationLayout.createSequentialGroup()
-                        .addComponent(jlId)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jpUserInformationLayout.setVerticalGroup(
-            jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpUserInformationLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlId))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlName))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfProvince, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlProvince))
-                .addGap(20, 20, 20)
-                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbCanton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jsConton))
-                .addGap(18, 18, 18)
-                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbDistrict, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlDistrict))
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-
-        jpMain.add(jpUserInformation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 325, -1));
-
-        jpButtonGroup.setBackground(new java.awt.Color(238, 248, 255));
-        jpButtonGroup.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jpButtonGroup.setToolTipText("");
-
-        jbSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
-        jbSave.setText("Guardar");
-
-        jbUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/edit.png"))); // NOI18N
-        jbUpdate.setText("Actualizar");
-
-        jbSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/search.png"))); // NOI18N
-        jbSearch.setText("Buscar");
-
-        jbLoan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/loan.png"))); // NOI18N
-        jbLoan.setText("Prestamos");
-
-        javax.swing.GroupLayout jpButtonGroupLayout = new javax.swing.GroupLayout(jpButtonGroup);
-        jpButtonGroup.setLayout(jpButtonGroupLayout);
-        jpButtonGroupLayout.setHorizontalGroup(
-            jpButtonGroupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpButtonGroupLayout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addComponent(jbSave, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(176, Short.MAX_VALUE))
-        );
-        jpButtonGroupLayout.setVerticalGroup(
-            jpButtonGroupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpButtonGroupLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpButtonGroupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbSave, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jpMain.add(jpButtonGroup, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 620, -1, -1));
 
         jpHeader.setBackground(new java.awt.Color(102, 204, 255));
 
@@ -234,27 +119,244 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     .addGroup(jpHeaderLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jlLogo)))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jpMain.add(jpHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 80));
+
+        jlName.setBackground(new java.awt.Color(0, 0, 0));
+        jlName.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jlName.setForeground(new java.awt.Color(153, 204, 255));
+        jlName.setText("Daniela Mora Barquero");
+        jlName.setToolTipText("");
+        jpMain.add(jlName, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 260, 50));
+
+        jTLoans.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Saldo", "Interes", "Amortización", "N° Abonos", "Total Abonos", "Fecha", "Estado"
+            }
+        ));
+        jScrollPane1.setViewportView(jTLoans);
+
+        jpMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 830, 230));
+
+        jpUserInformation.setBackground(new java.awt.Color(238, 248, 255));
+        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Crear Préstamo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
+
+        jlDate.setText("Fecha:");
+
+        jlTerm.setText("Plazo:");
+
+        jlInterestRate.setText("Tasa de Intéres:");
+        jlInterestRate.setToolTipText("");
+
+        jlAmount.setText("Monto:");
+        jlAmount.setToolTipText("");
+
+        tfAmount.setEditable(false);
+
+        cbDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" }));
+        cbDay.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbDayItemStateChanged(evt);
+            }
+        });
+
+        cbMonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        cbMonth.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbMonthItemStateChanged(evt);
+            }
+        });
+        cbMonth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMonthActionPerformed(evt);
+            }
+        });
+
+        cbYear.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbYearItemStateChanged(evt);
+            }
+        });
+
+        cbTerm.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbTermItemStateChanged(evt);
+            }
+        });
+
+        cbInterestRate.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbInterestRateItemStateChanged(evt);
+            }
+        });
+
+        jlMonth.setText("Mes");
+
+        jlDay.setText("Día");
+
+        jlYear.setText("Año");
+
+        jbCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
+        jbCreate.setText("Crear");
+        jbCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCreateActionPerformed(evt);
+            }
+        });
+
+        jbCreate1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
+        jbCreate1.setText("Crear");
+        jbCreate1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCreate1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpUserInformationLayout = new javax.swing.GroupLayout(jpUserInformation);
+        jpUserInformation.setLayout(jpUserInformationLayout);
+        jpUserInformationLayout.setHorizontalGroup(
+            jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpUserInformationLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpUserInformationLayout.createSequentialGroup()
+                        .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlInterestRate)
+                            .addComponent(jlAmount)
+                            .addComponent(jlTerm))
+                        .addGap(41, 41, 41)
+                        .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbTerm, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jpUserInformationLayout.createSequentialGroup()
+                        .addComponent(jlDate)
+                        .addGap(97, 97, 97)
+                        .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlDay)
+                            .addComponent(cbDay, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(31, 31, 31)
+                        .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlMonth)
+                            .addComponent(cbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlYear)
+                            .addComponent(cbYear, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jpUserInformationLayout.createSequentialGroup()
+                        .addComponent(jbCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addComponent(jbCreate1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+        jpUserInformationLayout.setVerticalGroup(
+            jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpUserInformationLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlMonth)
+                    .addComponent(jlDay)
+                    .addComponent(jlYear))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlDate)
+                    .addComponent(cbDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbTerm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlTerm))
+                .addGap(18, 18, 18)
+                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlInterestRate))
+                .addGap(18, 18, 18)
+                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlAmount))
+                .addGap(18, 18, 18)
+                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbCreate1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jpMain.add(jpUserInformation, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 530, 300));
+        jpUserInformation.getAccessibleContext().setAccessibleName("Crear Préstamo");
+
+        jbBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
+        jbBack.setText("Regresar");
+        jbBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBackActionPerformed(evt);
+            }
+        });
+        jpMain.add(jbBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 620, 125, 55));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jpMain, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpMain, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jpMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBackActionPerformed
+        controller.showClientView();
+    }//GEN-LAST:event_jbBackActionPerformed
+
+    private void cbDayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbDayItemStateChanged
+       //todo
+    }//GEN-LAST:event_cbDayItemStateChanged
+
+    private void cbMonthItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbMonthItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbMonthItemStateChanged
+
+    private void cbYearItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbYearItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbYearItemStateChanged
+
+    private void cbTermItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTermItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTermItemStateChanged
+
+    private void cbInterestRateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbInterestRateItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbInterestRateItemStateChanged
+
+    private void jbCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbCreateActionPerformed
+
+    private void cbMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMonthActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbMonthActionPerformed
+
+    private void jbCreate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreate1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbCreate1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,25 +395,29 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbCanton;
-    private javax.swing.JComboBox<String> cbDistrict;
-    private javax.swing.JButton jbLoan;
-    private javax.swing.JButton jbSave;
-    private javax.swing.JButton jbSearch;
-    private javax.swing.JButton jbUpdate;
-    private javax.swing.JLabel jlDistrict;
-    private javax.swing.JLabel jlId;
+    private javax.swing.JComboBox<String> cbDay;
+    private javax.swing.JComboBox<String> cbInterestRate;
+    private javax.swing.JComboBox<String> cbMonth;
+    private javax.swing.JComboBox<String> cbTerm;
+    private javax.swing.JComboBox<String> cbYear;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTLoans;
+    private javax.swing.JButton jbBack;
+    private javax.swing.JButton jbCreate;
+    private javax.swing.JButton jbCreate1;
+    private javax.swing.JLabel jlAmount;
+    private javax.swing.JLabel jlDate;
+    private javax.swing.JLabel jlDay;
+    private javax.swing.JLabel jlInterestRate;
     private javax.swing.JLabel jlLogo;
+    private javax.swing.JLabel jlMonth;
     private javax.swing.JLabel jlName;
-    private javax.swing.JLabel jlProvince;
+    private javax.swing.JLabel jlTerm;
     private javax.swing.JLabel jlTitle;
-    private javax.swing.JPanel jpButtonGroup;
+    private javax.swing.JLabel jlYear;
     private javax.swing.JPanel jpHeader;
     private javax.swing.JPanel jpMain;
     private javax.swing.JPanel jpUserInformation;
-    private javax.swing.JLabel jsConton;
-    private javax.swing.JTextField tfId;
-    private javax.swing.JTextField tfName;
-    private javax.swing.JTextField tfProvince;
+    private javax.swing.JTextField tfAmount;
     // End of variables declaration//GEN-END:variables
 }
