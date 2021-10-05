@@ -2,6 +2,7 @@ package system.presentation.monthlyPayment_view;
 
 import system.Application;
 import system.logic.Client;
+import system.logic.Loan;
 import system.logic.Service;
 
 public class Controller {
@@ -28,12 +29,39 @@ public class Controller {
         }
     }
     
+    public void payCurrentMonth(int loanIndex){
+        Client client = model.getClient();
+        Loan loan = client.getLoans().get(loanIndex);
+        loan.payMonthlyPayment();
+        model.setClient(client);
+        model.commit();
+        Service.instance().store();
+    }
+    
+    public void payTotal(int loanIndex){
+        Client client = model.getClient();
+        Loan loan = client.getLoans().get(loanIndex);
+        loan.payTotal();
+        model.setClient(client);
+        model.commit();
+        Service.instance().store();
+    }
+    
+    public void payExtraordinaryPayment(int loanIndex, double extraordinaryPayment){
+        Client client = model.getClient();
+        Loan loan = client.getLoans().get(loanIndex);
+        loan.addExtraordinaryPayment(extraordinaryPayment);
+        model.setClient(client);
+        model.commit();
+        Service.instance().store();
+    }
+    
     public boolean userExist(String id) {
         return Service.instance().userExist(id);
     }
     
-    public void show(String clientId) {
-        this.view.baseConfiguration(clientId);
+    public void show(String clientId, int loanIndex) {
+        this.view.baseConfiguration(clientId, loanIndex);
         this.view.setVisible(true);
     }
     
@@ -45,8 +73,10 @@ public class Controller {
         Service.instance().store();
     }
     
-    public void showClientView(){
+    public void showLoanView(String clientId){
         this.hide();
-        Application.CLIENT_VIEW.show();
+        Application.LOAN_VIEW.show(clientId);
     }    
+    
+    
 }

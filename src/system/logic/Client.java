@@ -1,5 +1,6 @@
 package system.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -16,7 +17,7 @@ public class Client {
  Province province;
  Canton canton;
  District district;
- List<Loan> loan;
+ List<Loan> loans;
 
     public Client(String id, String name, Province province, Canton canton, District district) {
         this.id = id;
@@ -24,7 +25,7 @@ public class Client {
         this.province = province;
         this.canton = canton;
         this.district = district;
-        this.loan = null;
+        this.loans = new ArrayList<>();
     }
 
     public Client() {
@@ -33,7 +34,7 @@ public class Client {
         this.province = new Province();
         this.canton = new Canton();
         this.district = new District();
-        this.loan = null;
+        this.loans = null;
     }
     
     public void update(Client client) {
@@ -84,12 +85,19 @@ public class Client {
         this.district = district;
     }
 
-    public List<Loan> getLoan() {
-        return loan;
+    public List<Loan> getLoans() {
+        return loans;
     }
 
-    public void setLoan(List<Loan> loan) {
-        this.loan = loan;
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
+    }
+    
+    public void addLoan(Loan loan){
+        if (this.loans == null){
+            this.loans = new ArrayList<>();
+        }
+        this.loans.add(loan);
     }
     
     

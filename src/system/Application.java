@@ -61,8 +61,8 @@ public class Application {
         
         system.presentation.monthlyPayment_view.Model monthlyPayment_view = new system.presentation.monthlyPayment_view.Model() ;
         system.presentation.monthlyPayment_view.View monthlyPaymentView = new system.presentation.monthlyPayment_view.View();
-        system.presentation.monthlyPayment_view.Controller montlyPaymentController = new system.presentation.monthlyPayment_view.Controller(monthlyPayment_view,monthlyPaymentView);
-        MONTHLYPAYMENT_VIEW = montlyPaymentController;
+        system.presentation.monthlyPayment_view.Controller monthlyPaymentController = new system.presentation.monthlyPayment_view.Controller(monthlyPayment_view,monthlyPaymentView);
+        MONTHLYPAYMENT_VIEW = monthlyPaymentController;
 
         SPLASH_VIEW.show();
     }
