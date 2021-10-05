@@ -157,9 +157,9 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jpMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 600, 370));
 
         jpUserInformation.setBackground(new java.awt.Color(238, 248, 255));
-        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pagos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
+        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pagos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
 
-        jbExtraordinaryPayments.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/loan.png"))); // NOI18N
+        jbExtraordinaryPayments.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/payment.png"))); // NOI18N
         jbExtraordinaryPayments.setText("Pago Extraordinario");
         jbExtraordinaryPayments.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,7 +169,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
         jlExtraordinaryPayment.setText("Pago Extraordinario:");
 
-        jbPaidMonth.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/loan.png"))); // NOI18N
+        jbPaidMonth.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/appointment.png"))); // NOI18N
         jbPaidMonth.setText("Pagar Mes Actual");
         jbPaidMonth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,7 +177,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             }
         });
 
-        jbTotalPay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/loan.png"))); // NOI18N
+        jbTotalPay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/gross.png"))); // NOI18N
         jbTotalPay.setText("Pagar Totalidad");
         jbTotalPay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,7 +219,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
         jpMain.add(jpUserInformation, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 230, 240, 370));
 
-        jbBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/loan.png"))); // NOI18N
+        jbBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/back.png"))); // NOI18N
         jbBack.setText("Regresar");
         jbBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -174,7 +174,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jpMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 830, 230));
 
         jpUserInformation.setBackground(new java.awt.Color(238, 248, 255));
-        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Crear Préstamo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
+        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Crear Préstamo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
 
         jlDate.setText("Fecha:");
 
@@ -207,7 +207,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
         jlYear.setText("Año");
 
-        jbCalculateFee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
+        jbCalculateFee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/calculator.png"))); // NOI18N
         jbCalculateFee.setText("Calcular Cuota");
         jbCalculateFee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,7 +215,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             }
         });
 
-        jbCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
+        jbCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/signing.png"))); // NOI18N
         jbCreate.setText("Crear");
         jbCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -298,7 +298,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
         jpMain.add(jpUserInformation, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 530, 300));
 
-        jbBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
+        jbBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/back.png"))); // NOI18N
         jbBack.setText("Regresar");
         jbBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
