@@ -145,7 +145,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     }
     
     public void showMessageDialog(String message) {
-        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this, message, "Aviso", JOptionPane.PLAIN_MESSAGE);
     }
     
 

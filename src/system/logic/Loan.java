@@ -2,14 +2,17 @@ package system.logic;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import system.libs.Formulas;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Loan {
     int term;
     double amount;
     double interestRate;
     double monthlyFee;
-    boolean isActive;
+    boolean active;
     Date date;
     List<MonthlyPayment> monthlyPayments;
     List<Double> extraordinaryPayments;
@@ -19,7 +22,7 @@ public class Loan {
         this.amount = amount;
         this.interestRate = interestRate;
         this.monthlyFee = Formulas.monthlyFee(term, amount, interestRate);
-        this.isActive = true;
+        this.active = true;
         this.date = date;
         this.monthlyPayments = getMonthlyPaymentList();
         this.extraordinaryPayments = new ArrayList<>();
@@ -30,7 +33,7 @@ public class Loan {
         this.amount = 0.0;
         this.interestRate = 0.0;
         this.monthlyFee = 0.0;
-        this.isActive = false;
+        this.active = false;
         this.date = null;
         this.monthlyPayments = null;
         this.extraordinaryPayments = null;
@@ -68,12 +71,12 @@ public class Loan {
         this.monthlyFee = monthlyFee;
     }
 
-    public boolean isIsActive() {
-        return isActive;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Date getDate() {
@@ -100,6 +103,14 @@ public class Loan {
         this.extraordinaryPayments = extraordinaryPayments;
     }
     
+    public int getExtraordinaryPaymentsSize() {
+        if (extraordinaryPayments != null) {
+            return extraordinaryPayments.size();
+        }
+        
+        return 0;
+    }
+    
     private int generateTerm() {
         int total = 0;
         MonthlyPayment mp;
@@ -117,6 +128,7 @@ public class Loan {
     private List<MonthlyPayment> getMonthlyPaymentList() {
         List<MonthlyPayment> result = new ArrayList<>();
         MonthlyPayment monthlyPayment = null;
+        Date tempDate = date;
         double tempAmount = amount;
         double tempInterestRate;
         double tempAmortization = 0.0;
@@ -124,8 +136,9 @@ public class Loan {
             tempAmount = tempAmount - tempAmortization;
             tempInterestRate = tempAmount * interestRate;
             tempAmortization = monthlyFee - tempInterestRate;
-            monthlyPayment = new MonthlyPayment(i + 1, tempAmount, tempInterestRate, tempAmortization, monthlyFee, new Date());
+            monthlyPayment = new MonthlyPayment(i + 1, tempAmount, tempInterestRate, tempAmortization, monthlyFee, tempDate);
             result.add(monthlyPayment);
+            tempDate = getNextDate(tempDate);
         }
         
         return result;
@@ -150,11 +163,38 @@ public class Loan {
         }
     }
     
+    private Date getNextDate(Date tempDate){
+        int day = tempDate.getDay();
+        int month = tempDate.getMonth();
+        int year = tempDate.getYear();
+        Date newDate;
+        if(month == 12){
+            newDate = new Date (day, 1, year + 1);
+        } else {
+            newDate = new Date (day, month + 1, year);
+        }
+        
+        return newDate;
+    }
+    
+    
+    public void payTotal(){
+        MonthlyPayment mp;
+        for(int i = 0; i < monthlyPayments.size();i++){
+            mp = monthlyPayments.get(i);
+            mp.setPaid(true);
+        }
+        
+        active = false;
+    }
+    
     public double getExtraordinaryPaymentTotal() {
         double total = 0.0;
         
-        for (int i = 0; i < extraordinaryPayments.size(); i++) {
-            total += extraordinaryPayments.get(i);
+        if (extraordinaryPayments != null) {
+            for (int i = 0; i < extraordinaryPayments.size(); i++) {
+                total += extraordinaryPayments.get(i);
+            }
         }
         
         return total;
@@ -175,8 +215,10 @@ public class Loan {
     }
     
     public boolean addExtraordinaryPayment(double extraordinaryPayment) {
-        if (!isActive) return false;
+        if (!active) return false;
         if (extraordinaryPayment > getPendingAmortizations()) return false;
+        if(extraordinaryPayments == null) extraordinaryPayments = new ArrayList<>();
+        
         extraordinaryPayments.add(extraordinaryPayment);
         double newAmount = getPendingAmortizations() - extraordinaryPayment;
         getNewMonthlyPaymentList(newAmount);
@@ -192,7 +234,7 @@ public class Loan {
                 mp.setPaid(true);
                 
                 if(i == monthlyPayments.size() - 1) {
-                    isActive = false;
+                    active = false;
                 }
                 
                 return true;
@@ -201,4 +243,10 @@ public class Loan {
         
         return false;
     } 
+    
+    public String getFormatDate(){
+        return date.getDay()+"/"+date.getMonth()+"/"+date.getYear();
+    }
 }
+
+

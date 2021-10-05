@@ -2,27 +2,39 @@ package system.presentation.loan_view;
 
 import java.util.Observable;
 import javax.swing.JOptionPane;
+import system.libs.Formulas;
 import system.logic.Client;
+import system.logic.Date;
+import system.logic.Loan;
 
 public class View extends javax.swing.JFrame implements java.util.Observer {
     Controller controller;
     Model model;
+    String clientId;
     
     public View() {
         initComponents();
     }
     
-    public void baseConfiguration(String clientId) {
-        if (clientId.isEmpty() || !controller.userExist(clientId)) {
+    public void baseConfiguration(String id) {
+        if (id.isEmpty() || !controller.userExist(id)) {
             showErrorDialog("No es posible ver la pantalla de prestamos.\nVerifique lo siguiente:\n1. El campo de cedula no puede estar vacio.\n2.No existe un cliente asociado a este numero de cedula.");
             controller.showClientView();
         } else {
-            controller.getClient(clientId);
+            clientId = id;
+            controller.getClient(id);
         }
     }
     
     public void showErrorDialog(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void showMessageDialog(String message) {
+        JOptionPane.showMessageDialog(this, message, "Aviso", JOptionPane.PLAIN_MESSAGE);
+    }
+     public void showWarning(String message) {
+        JOptionPane.showMessageDialog(null, message, "Advertencia", JOptionPane.WARNING_MESSAGE);
     }
     
     public void setController(Controller controller){
@@ -47,9 +59,22 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         Client client = model.getClient();
         if (client != null) {
             jlName.setText(client.getName());
+            if(client.getLoans() != null && client.getLoans().size() > 0){
+                jtLoans.setModel(new LoanTableModel(client.getLoans()));
+            }
         }
+        
     }
-
+    
+    
+    public void cleanFields(){
+        cbDay.setSelectedIndex(0);
+        cbMonth.setSelectedIndex(0);
+        cbYear.setSelectedIndex(0);
+        cbInterestRate.setSelectedIndex(0);
+        cbTerm.setSelectedIndex(0);
+          tfAmount.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,7 +90,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jlLogo = new javax.swing.JLabel();
         jlName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTLoans = new javax.swing.JTable();
+        jtLoans = new javax.swing.JTable();
         jpUserInformation = new javax.swing.JPanel();
         jlDate = new javax.swing.JLabel();
         jlTerm = new javax.swing.JLabel();
@@ -80,8 +105,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jlMonth = new javax.swing.JLabel();
         jlDay = new javax.swing.JLabel();
         jlYear = new javax.swing.JLabel();
+        jbCalculateFee = new javax.swing.JButton();
         jbCreate = new javax.swing.JButton();
-        jbCreate1 = new javax.swing.JButton();
         jbBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -131,15 +156,20 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jlName.setToolTipText("");
         jpMain.add(jlName, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 260, 50));
 
-        jTLoans.setModel(new javax.swing.table.DefaultTableModel(
+        jtLoans.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Saldo", "Interes", "Amortización", "N° Abonos", "Total Abonos", "Fecha", "Estado"
+                "Plazo", "Saldo", "Interes", "Cuota Mensual", "N° Abonos", "Total Abonos", "Fecha", "Estado"
             }
         ));
-        jScrollPane1.setViewportView(jTLoans);
+        jtLoans.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtLoansMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtLoans);
 
         jpMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 830, 230));
 
@@ -156,44 +186,20 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jlAmount.setText("Monto:");
         jlAmount.setToolTipText("");
 
-        tfAmount.setEditable(false);
-
         cbDay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25" }));
-        cbDay.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbDayItemStateChanged(evt);
-            }
-        });
 
         cbMonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-        cbMonth.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbMonthItemStateChanged(evt);
-            }
-        });
         cbMonth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbMonthActionPerformed(evt);
             }
         });
 
-        cbYear.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbYearItemStateChanged(evt);
-            }
-        });
+        cbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2021", "2022" }));
 
-        cbTerm.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbTermItemStateChanged(evt);
-            }
-        });
+        cbTerm.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3", "6", "12", "24", "36", "48", "60" }));
 
-        cbInterestRate.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbInterestRateItemStateChanged(evt);
-            }
-        });
+        cbInterestRate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", " " }));
 
         jlMonth.setText("Mes");
 
@@ -201,19 +207,19 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
         jlYear.setText("Año");
 
+        jbCalculateFee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
+        jbCalculateFee.setText("Calcular Cuota");
+        jbCalculateFee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCalculateFeeActionPerformed(evt);
+            }
+        });
+
         jbCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
         jbCreate.setText("Crear");
         jbCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCreateActionPerformed(evt);
-            }
-        });
-
-        jbCreate1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
-        jbCreate1.setText("Crear");
-        jbCreate1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCreate1ActionPerformed(evt);
             }
         });
 
@@ -250,9 +256,9 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                             .addComponent(jlYear)
                             .addComponent(cbYear, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jpUserInformationLayout.createSequentialGroup()
-                        .addComponent(jbCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbCalculateFee, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addComponent(jbCreate1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
@@ -265,11 +271,12 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     .addComponent(jlDay)
                     .addComponent(jlYear))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlDate)
-                    .addComponent(cbDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbDay, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jlDate)
+                        .addComponent(cbYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbTerm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -284,13 +291,12 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     .addComponent(jlAmount))
                 .addGap(18, 18, 18)
                 .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbCreate1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbCalculateFee, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jpMain.add(jpUserInformation, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 530, 300));
-        jpUserInformation.getAccessibleContext().setAccessibleName("Crear Préstamo");
 
         jbBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
         jbBack.setText("Regresar");
@@ -305,10 +311,10 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jpMain, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,39 +330,39 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
     private void jbBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBackActionPerformed
         controller.showClientView();
+       cleanFields();
+        
     }//GEN-LAST:event_jbBackActionPerformed
 
-    private void cbDayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbDayItemStateChanged
-       //todo
-    }//GEN-LAST:event_cbDayItemStateChanged
-
-    private void cbMonthItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbMonthItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbMonthItemStateChanged
-
-    private void cbYearItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbYearItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbYearItemStateChanged
-
-    private void cbTermItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbTermItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbTermItemStateChanged
-
-    private void cbInterestRateItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbInterestRateItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbInterestRateItemStateChanged
-
-    private void jbCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbCreateActionPerformed
+    private void jbCalculateFeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCalculateFeeActionPerformed
+       int term = Integer.parseInt(cbTerm.getSelectedItem().toString());
+       double interestRate = Double.parseDouble(cbInterestRate.getSelectedItem().toString()) / 100;
+       double amount = Double.parseDouble(tfAmount.getText());
+       double fee = (int)Formulas.monthlyFee(term, amount, interestRate);
+        showMessageDialog("La cuota del Prestamo es de: " + fee);
+    }//GEN-LAST:event_jbCalculateFeeActionPerformed
 
     private void cbMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMonthActionPerformed
-        // TODO add your handling code here:
+    
     }//GEN-LAST:event_cbMonthActionPerformed
 
-    private void jbCreate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreate1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbCreate1ActionPerformed
+    private void jbCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreateActionPerformed
+       int day = Integer.parseInt(cbDay.getSelectedItem().toString());
+       int month = Integer.parseInt(cbMonth.getSelectedItem().toString());
+       int year = Integer.parseInt(cbYear.getSelectedItem().toString());
+       int term = Integer.parseInt(cbTerm.getSelectedItem().toString());
+       double interestRate = Double.parseDouble(cbInterestRate.getSelectedItem().toString()) / 100;
+       double amount = Double.parseDouble(tfAmount.getText());
+        controller.setLoan(new Loan(term, amount, interestRate, new Date(day, month, year)));
+       cleanFields();
+       showMessageDialog("El préstamo ha sido creado exitosamente");
+    }//GEN-LAST:event_jbCreateActionPerformed
+
+    private void jtLoansMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtLoansMouseClicked
+       if(evt.getClickCount() == 2){
+            controller.showMonthlyPaymentView(clientId, jtLoans.getSelectedRow());
+        }
+    }//GEN-LAST:event_jtLoansMouseClicked
 
     /**
      * @param args the command line arguments
@@ -401,10 +407,9 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private javax.swing.JComboBox<String> cbTerm;
     private javax.swing.JComboBox<String> cbYear;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTLoans;
     private javax.swing.JButton jbBack;
+    private javax.swing.JButton jbCalculateFee;
     private javax.swing.JButton jbCreate;
-    private javax.swing.JButton jbCreate1;
     private javax.swing.JLabel jlAmount;
     private javax.swing.JLabel jlDate;
     private javax.swing.JLabel jlDay;
@@ -418,6 +423,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private javax.swing.JPanel jpHeader;
     private javax.swing.JPanel jpMain;
     private javax.swing.JPanel jpUserInformation;
+    private javax.swing.JTable jtLoans;
     private javax.swing.JTextField tfAmount;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,5 +1,9 @@
 package system.logic;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MonthlyPayment {
     int number;
     double balance;
@@ -8,7 +12,7 @@ public class MonthlyPayment {
     double fee;
     boolean paid;
     Date date;
-
+    
     public MonthlyPayment(int number, double balance, double interest, double amortization, double fee, Date date) {
         this.number = number;
         this.balance = balance;
@@ -85,5 +89,9 @@ public class MonthlyPayment {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+    
+      public String getFormatDate(){
+        return date.getDay()+"/"+date.getMonth()+"/"+date.getYear();
     }
 }
