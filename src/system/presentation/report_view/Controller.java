@@ -32,8 +32,7 @@ public class Controller {
         return Service.instance().userExist(id);
     }
     
-    public void show(String clientId) {
-        this.view.baseConfiguration(clientId);
+    public void show() {
         this.view.setVisible(true);
     }
     

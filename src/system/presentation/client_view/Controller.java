@@ -136,4 +136,10 @@ public class Controller {
         this.hide();
         Application.LOAN_VIEW.show(clientId);
     }  
+    
+    public void showReportView(){
+        this.hide();
+        Application.REPORT_VIEW.show();
+    }
+    
 }

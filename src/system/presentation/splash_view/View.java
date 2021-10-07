@@ -38,8 +38,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     
     public void progressBarSetUp () {
         try {
-            for(int i = 0; i <= 1; i++) {
-                Thread.sleep(40);
+            for(int i = 0; i <= 100; i++) {
+                Thread.sleep(20);
                 loadingBar.setValue(i);
                 jlProgress.setText(i + "%");
             }

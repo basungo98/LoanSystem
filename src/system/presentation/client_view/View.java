@@ -201,15 +201,17 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         cbCanton = new javax.swing.JComboBox<>();
         cbDistrict = new javax.swing.JComboBox<>();
         jpButtonGroup = new javax.swing.JPanel();
-        jbSave = new javax.swing.JButton();
         jbUpdate = new javax.swing.JButton();
         jbSearch = new javax.swing.JButton();
         jbLoan = new javax.swing.JButton();
+        jbReport = new javax.swing.JButton();
+        jbSave = new javax.swing.JButton();
         jpHeader = new javax.swing.JPanel();
         jlTitle = new javax.swing.JLabel();
         jlLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema de Clientes");
 
         jpMain.setBackground(new java.awt.Color(238, 248, 255));
         jpMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -319,7 +321,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jpMain.add(jpMap, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, -1, -1));
 
         jpUserInformation.setBackground(new java.awt.Color(238, 248, 255));
-        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información del Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
+        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información del Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
 
         jlId.setText("Cedula:");
 
@@ -400,14 +402,6 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jpButtonGroup.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jpButtonGroup.setToolTipText("");
 
-        jbSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
-        jbSave.setText("Guardar");
-        jbSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSaveActionPerformed(evt);
-            }
-        });
-
         jbUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/edit.png"))); // NOI18N
         jbUpdate.setText("Actualizar");
         jbUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -432,30 +426,49 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             }
         });
 
+        jbReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
+        jbReport.setText("Reportes");
+        jbReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbReportActionPerformed(evt);
+            }
+        });
+
+        jbSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/diskette.png"))); // NOI18N
+        jbSave.setText("Guardar");
+        jbSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSaveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpButtonGroupLayout = new javax.swing.GroupLayout(jpButtonGroup);
         jpButtonGroup.setLayout(jpButtonGroupLayout);
         jpButtonGroupLayout.setHorizontalGroup(
             jpButtonGroupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpButtonGroupLayout.createSequentialGroup()
-                .addGap(135, 135, 135)
+                .addGap(88, 88, 88)
+                .addComponent(jbReport, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jbSave, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jbLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addComponent(jbLoan)
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         jpButtonGroupLayout.setVerticalGroup(
             jpButtonGroupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpButtonGroupLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpButtonGroupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbSave, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbReport, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbSave, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -491,7 +504,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     .addGroup(jpHeaderLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jlLogo)))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jpMain.add(jpHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 80));
@@ -506,7 +519,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpMain, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
+            .addComponent(jpMain, javax.swing.GroupLayout.PREFERRED_SIZE, 699, Short.MAX_VALUE)
         );
 
         pack();
@@ -516,7 +529,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private void jbSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSaveActionPerformed
         String id = tfId.getText();
         if (id.isEmpty() || controller.userExist(id)) {
-            showErrorDialog("No fue posible guardar el nuevo usuario.\nVerifique lo siguiente:\n1. El campo de cedula no puede estar vacio.\n2.Ya existe un cliente asociado a este numero de cedula.");
+            showErrorDialog("No fue posible guardar el nuevo cliente.\nVerifique lo siguiente:\n1. El campo de cédula no puede estar vacio.\n2. Ya existe un cliente asociado a este número de cédula.");
             return;
         } 
         
@@ -531,7 +544,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private void jbUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateActionPerformed
         String id = tfId.getText();
         if (id.isEmpty() || !controller.userExist(id)) {
-            showErrorDialog("No fue posible completar la actualizacion de datos.\nVerifique lo siguiente:\n1. El campo de cedula no puede estar vacio.\n2.No existe un cliente asociado a este numero de cedula.");
+            showErrorDialog("No fue posible completar la actualizacion de datos.\nVerifique lo siguiente:\n1. El campo de cédula no puede estar vacio.\n2. No existe un cliente asociado a este número de cédula.");
             return;
         } 
         
@@ -545,9 +558,9 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private void jbSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSearchActionPerformed
         String id = tfId.getText();
         if(id.isEmpty()) {
-            showErrorDialog("Para buscar un cliente debe digitar la cedula.");
+            showErrorDialog("Para buscar un cliente debe digitar la cédula.");
         } else if(!controller.userExist(id)) {
-            showErrorDialog("No existe un cliente con el numero de cedula: " + id);
+            showErrorDialog("No existe un cliente con el número de cédula: " + id);
         } else {
             controller.getClient(id);
         }
@@ -557,7 +570,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private void jbLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLoanActionPerformed
         String id = tfId.getText();
         if (id.isEmpty() || !controller.userExist(id)) {
-            showErrorDialog("No es posible ver la pantalla de prestamos.\nVerifique lo siguiente:\n1. El campo de cedula no puede estar vacio.\n2.No existe un cliente asociado a este numero de cedula.");
+            showErrorDialog("No es posible ver la pantalla de prestamos.\nVerifique lo siguiente:\n1. El campo de cédula no puede estar vacio.\n2. No existe un cliente asociado a este número de cédula.");
         } else {
             controller.showLoanView(id);
         }
@@ -653,6 +666,10 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         }
     }//GEN-LAST:event_cbCantonItemStateChanged
 
+    private void jbReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbReportActionPerformed
+        controller.showReportView();// TODO add your handling code here:
+    }//GEN-LAST:event_jbReportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -692,6 +709,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private javax.swing.JComboBox<String> cbCanton;
     private javax.swing.JComboBox<String> cbDistrict;
     private javax.swing.JButton jbLoan;
+    private javax.swing.JButton jbReport;
     private javax.swing.JButton jbSave;
     private javax.swing.JButton jbSearch;
     private javax.swing.JButton jbUpdate;
