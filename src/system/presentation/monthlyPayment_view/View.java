@@ -288,9 +288,13 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             double extPay = Double.parseDouble(extraordinaryPayment);
             
             if(extPay > 0){
-                controller.payExtraordinaryPayment( loanIndex, extPay);
-                showMessageDialog("El abono extraordinario ha sido realizado exitosamente.");
-                cleanFields();
+                boolean success = controller.payExtraordinaryPayment( loanIndex, extPay);
+                if(success) {
+                    showMessageDialog("El abono extraordinario ha sido realizado exitosamente.");
+                    cleanFields();
+                } else {
+                    showErrorDialog("El abono extraordinario no fue realizado.\nVerifique si el monto ingresado es correcto.");
+                }
             } else {
                  showErrorDialog("El campo de abono extraordinario no puede estar vacio, y debe ser númerico.");
             }

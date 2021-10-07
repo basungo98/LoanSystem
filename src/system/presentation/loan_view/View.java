@@ -387,8 +387,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 int year = Integer.parseInt(cbYear.getSelectedItem().toString());
                 int term = Integer.parseInt(cbTerm.getSelectedItem().toString());
                 double interestRate = Double.parseDouble(cbInterestRate.getSelectedItem().toString()) / 100;
-                controller.setLoan(new Loan(term, amountValue, interestRate, new Date(day, month, year)));
                 cleanFields();
+                controller.setLoan(new Loan(term, amountValue, interestRate, new Date(day, month, year)));
                 showMessageDialog("El préstamo ha sido creado exitosamente");
             } else {
                  showErrorDialog("El campo de monto no puede estar vacio, y debe ser númerico.");

@@ -47,13 +47,14 @@ public class Controller {
         Service.instance().store();
     }
     
-    public void payExtraordinaryPayment(int loanIndex, double extraordinaryPayment){
+    public boolean payExtraordinaryPayment(int loanIndex, double extraordinaryPayment){
         Client client = model.getClient();
         Loan loan = client.getLoans().get(loanIndex);
-        loan.addExtraordinaryPayment(extraordinaryPayment);
+        boolean success = loan.addExtraordinaryPayment(extraordinaryPayment);
         model.setClient(client);
         model.commit();
         Service.instance().store();
+        return success;
     }
     
     public boolean userExist(String id) {
