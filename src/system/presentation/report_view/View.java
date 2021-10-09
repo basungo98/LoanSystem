@@ -10,13 +10,19 @@ import system.presentation.loan_view.LoanTableModel;
 public class View extends javax.swing.JFrame implements java.util.Observer {
     Controller controller;
     Model model;
+    String clientId;
     
     public View() {
         initComponents();
+        cleanView();
     }
       
     public void showErrorDialog(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public void showMessageDialog(String message) {
+        JOptionPane.showMessageDialog(this, message, "Aviso", JOptionPane.PLAIN_MESSAGE);
     }
     
     public void setController(Controller controller){
@@ -44,10 +50,16 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             jlNameClient.setText(client.getName());
             if(client.getLoans() != null && client.getLoans().size() > 0){
                 jtLoans.setModel(new LoanTableModel(client.getLoans()));
+                jbLoansReport.setEnabled(true);
             }
         }
     }
-
+    
+    private void cleanView(){
+        jbLoansReport.setEnabled(false);
+        jbMPReport.setEnabled(false);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,7 +77,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jbClientsReport = new javax.swing.JButton();
         tfId = new javax.swing.JTextField();
         jlIdText = new javax.swing.JLabel();
-        jbMonthReport = new javax.swing.JButton();
+        jbLoansReport = new javax.swing.JButton();
         jbMPReport = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtLoans = new javax.swing.JTable();
@@ -132,11 +144,11 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
         jlIdText.setText("Cédula del cliente::");
 
-        jbMonthReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/appointment.png"))); // NOI18N
-        jbMonthReport.setText("Reporte de Prestamos");
-        jbMonthReport.addActionListener(new java.awt.event.ActionListener() {
+        jbLoansReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/appointment.png"))); // NOI18N
+        jbLoansReport.setText("Reporte de Prestamos");
+        jbLoansReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbMonthReportActionPerformed(evt);
+                jbLoansReportActionPerformed(evt);
             }
         });
 
@@ -188,13 +200,14 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     .addGroup(jpUserInformationLayout.createSequentialGroup()
                         .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jlIdText)
-                            .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jbSearch)
+                            .addGroup(jpUserInformationLayout.createSequentialGroup()
+                                .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbSearch)))
                         .addGap(58, 58, 58)
                         .addComponent(jlNameClient, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jbMonthReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbLoansReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbMPReport, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -207,14 +220,15 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     .addGroup(jpUserInformationLayout.createSequentialGroup()
                         .addComponent(jlIdText)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jlNameClient, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jpUserInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jlNameClient, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jbMonthReport, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(jbLoansReport, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbMPReport, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -248,32 +262,26 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbClientsReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbClientsReportActionPerformed
-//        String extraordinaryPayment = tfExtraordinaryPayments.getText();
-//
-//        if(isNumeric(extraordinaryPayment)){
-//            double extPay = Double.parseDouble(extraordinaryPayment);
-//
-//            if(extPay > 0){
-//                controller.payExtraordinaryPayment( loanIndex, extPay);
-//                showMessageDialog("El abono extraordinario ha sido realizado exitosamente.");
-//                cleanFields();
-//            } else {
-//                showErrorDialog("El campo de abono extraordinario no puede estar vacio, y debe ser númerico.");
-//            }
-//        } else {
-//            showErrorDialog("El campo de abono extraordinario no puede estar vacio, y debe ser númerico.");
-//        }
+        
+        boolean success = controller.generateClientReport();
+        if(success){
+            showMessageDialog("El reporte fue generado exitosamente.");
+        } else {
+            showErrorDialog("No fue posible generar el reporte.");
+        }
     }//GEN-LAST:event_jbClientsReportActionPerformed
 
     private void jbBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBackActionPerformed
         jtLoans.setModel(new LoanTableModel(new ArrayList<>()));
         controller.showClientView();
+        tfId.setText("");
+        cleanView();
     }//GEN-LAST:event_jbBackActionPerformed
 
     private void jtLoansMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtLoansMouseClicked
-//        if(evt.getClickCount() == 2){
-//            controller.showMonthlyPaymentView(clientId, jtLoans.getSelectedRow());
-//        }
+        if(evt.getClickCount() == 1){
+            jbMPReport.setEnabled(true);
+        }
     }//GEN-LAST:event_jtLoansMouseClicked
 
     private void tfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdActionPerformed
@@ -281,23 +289,53 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     }//GEN-LAST:event_tfIdActionPerformed
 
     private void jbSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSearchActionPerformed
-        String id = tfId.getText();
-        if(id.isEmpty()) {
+        clientId = tfId.getText();
+        if(clientId.isEmpty()) {
             showErrorDialog("Para buscar un cliente debe digitar la cédula.");
-        } else if(!controller.userExist(id)) {
-            showErrorDialog("No existe un cliente con el número de cédula: " + id);
+        } else if(!controller.userExist(clientId)) {
+            showErrorDialog("No existe un cliente con el número de cédula: " + clientId);
         } else {
-            controller.getClient(id);
+            cleanView();
+            controller.getClient(clientId);
         }
 
     }//GEN-LAST:event_jbSearchActionPerformed
 
-    private void jbMonthReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMonthReportActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbMonthReportActionPerformed
+    private void jbLoansReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLoansReportActionPerformed
+        if(clientId.isEmpty()) {
+            showErrorDialog("Para buscar un cliente debe digitar la cédula.");
+        } else if(!controller.userExist(clientId)) {
+            showErrorDialog("No existe un cliente con el número de cédula: " + clientId);
+        } else {
+            boolean success = controller.generateLoanReport(clientId);
+            if(success){
+                showMessageDialog("El reporte fue generado exitosamente.");
+            } else {
+                showErrorDialog("No fue posible generar el reporte.");
+            }
+        }
+    }//GEN-LAST:event_jbLoansReportActionPerformed
 
     private void jbMPReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMPReportActionPerformed
-        // TODO add your handling code here:
+        if(clientId.isEmpty()) {
+            showErrorDialog("Para buscar un cliente debe digitar la cédula.");
+        } else if(!controller.userExist(clientId)) {   
+            showErrorDialog("No existe un cliente con el número de cédula: " + clientId);
+        } else {
+            int selectedRow = jtLoans.getSelectedRow();
+            
+            if(selectedRow >= 0){
+               boolean success = controller.generateMonthlyPaymentReport(clientId, selectedRow);
+                if(success){
+                    showMessageDialog("El reporte fue generado exitosamente.");
+                } else {
+                    showErrorDialog("No fue posible generar el reporte.");
+                }
+            } else{
+                 showErrorDialog("Debe seleccionar un préstamo de la lista.");
+                 jbMPReport.setEnabled(false);
+            }
+                } 
     }//GEN-LAST:event_jbMPReportActionPerformed
 
     /**
@@ -342,8 +380,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbBack;
     private javax.swing.JButton jbClientsReport;
+    private javax.swing.JButton jbLoansReport;
     private javax.swing.JButton jbMPReport;
-    private javax.swing.JButton jbMonthReport;
     private javax.swing.JButton jbSearch;
     private javax.swing.JLabel jlIdText;
     private javax.swing.JLabel jlLogo;

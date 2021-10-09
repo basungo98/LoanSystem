@@ -1,5 +1,6 @@
 package system.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 import system.data.Data;
 import system.data.XmlPersister;
@@ -56,6 +57,16 @@ public class Service {
         }
         else {
             throw new Exception("Cliente no existe");
+        }   
+    }
+    
+    public List<Client> getClients(){
+        List <Client> clients = data.getClients();
+        if (clients != null) {
+            return clients;
+        }
+        else {
+            return new ArrayList<>();
         }   
     }
     

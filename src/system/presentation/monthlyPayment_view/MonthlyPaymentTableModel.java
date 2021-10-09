@@ -5,11 +5,8 @@
  */
 package system.presentation.monthlyPayment_view;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import system.logic.MonthlyPayment;
 

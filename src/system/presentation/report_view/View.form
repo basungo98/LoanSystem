@@ -140,16 +140,18 @@
                           <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jlIdText" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tfId" min="-2" pref="154" max="-2" attributes="0"/>
+                                  <Component id="jlIdText" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="tfId" min="-2" pref="154" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jbSearch" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jbSearch" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                               <Component id="jlNameClient" min="-2" pref="334" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jbMonthReport" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jbLoansReport" alignment="0" max="32767" attributes="0"/>
                           <Component id="jbMPReport" alignment="0" pref="798" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -165,16 +167,18 @@
                           <Group type="102" attributes="0">
                               <Component id="jlIdText" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="tfId" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="tfId" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="jbSearch" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <Component id="jlNameClient" alignment="1" min="-2" pref="50" max="-2" attributes="0"/>
-                          <Component id="jbSearch" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="230" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jbMonthReport" min="-2" pref="55" max="-2" attributes="0"/>
-                      <EmptySpace pref="16" max="32767" attributes="0"/>
+                      <Component id="jbLoansReport" min="-2" pref="55" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jbMPReport" min="-2" pref="55" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -203,7 +207,7 @@
                 <Property name="text" type="java.lang.String" value="C&#xe9;dula del cliente::"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jbMonthReport">
+            <Component class="javax.swing.JButton" name="jbLoansReport">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/system/assets/icons/appointment.png"/>
@@ -211,7 +215,7 @@
                 <Property name="text" type="java.lang.String" value="Reporte de Prestamos"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbMonthReportActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbLoansReportActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jbMPReport">
