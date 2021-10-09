@@ -1,5 +1,7 @@
 package system.presentation.loan_view;
 
+import static java.lang.Integer.parseInt;
+import java.util.ArrayList;
 import java.util.Observable;
 import javax.swing.JOptionPane;
 import system.libs.Formulas;
@@ -73,8 +75,23 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         cbYear.setSelectedIndex(0);
         cbInterestRate.setSelectedIndex(0);
         cbTerm.setSelectedIndex(0);
-          tfAmount.setText("");
+        tfAmount.setText("");
+        jtLoans.setModel(new LoanTableModel(new ArrayList<>()));
     }
+    
+    private boolean isNumeric(String strNum) {
+        if (strNum == null || strNum.isEmpty()) {
+            return false;
+        }
+
+        try {
+            parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,6 +127,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jbBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema de Préstamos");
 
         jpMain.setBackground(new java.awt.Color(238, 248, 255));
         jpMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -174,7 +192,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jpMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 830, 230));
 
         jpUserInformation.setBackground(new java.awt.Color(238, 248, 255));
-        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Crear Préstamo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
+        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Crear Préstamo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
 
         jlDate.setText("Fecha:");
 
@@ -330,16 +348,27 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
     private void jbBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBackActionPerformed
         controller.showClientView();
-       cleanFields();
+        cleanFields();
         
     }//GEN-LAST:event_jbBackActionPerformed
 
     private void jbCalculateFeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCalculateFeeActionPerformed
-       int term = Integer.parseInt(cbTerm.getSelectedItem().toString());
-       double interestRate = Double.parseDouble(cbInterestRate.getSelectedItem().toString()) / 100;
-       double amount = Double.parseDouble(tfAmount.getText());
-       double fee = (int)Formulas.monthlyFee(term, amount, interestRate);
-        showMessageDialog("La cuota del Prestamo es de: " + fee);
+       String amount = tfAmount.getText();
+        
+        if(isNumeric(amount)){
+            double amountValue = Double.parseDouble(amount);
+            
+            if(amountValue > 0){
+                int term = Integer.parseInt(cbTerm.getSelectedItem().toString());
+                double interestRate = Double.parseDouble(cbInterestRate.getSelectedItem().toString()) / 100;
+                double fee = (int)Formulas.monthlyFee(term, amountValue, interestRate);
+                showMessageDialog("La cuota del Prestamo es de: " + fee);
+            } else {
+                 showErrorDialog("El campo de monto no puede estar vacio, y debe ser númerico.");
+            }
+        } else {
+           showErrorDialog("El campo de monto no puede estar vacio, y debe ser númerico.");
+        }
     }//GEN-LAST:event_jbCalculateFeeActionPerformed
 
     private void cbMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMonthActionPerformed
@@ -347,15 +376,26 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     }//GEN-LAST:event_cbMonthActionPerformed
 
     private void jbCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreateActionPerformed
-       int day = Integer.parseInt(cbDay.getSelectedItem().toString());
-       int month = Integer.parseInt(cbMonth.getSelectedItem().toString());
-       int year = Integer.parseInt(cbYear.getSelectedItem().toString());
-       int term = Integer.parseInt(cbTerm.getSelectedItem().toString());
-       double interestRate = Double.parseDouble(cbInterestRate.getSelectedItem().toString()) / 100;
-       double amount = Double.parseDouble(tfAmount.getText());
-        controller.setLoan(new Loan(term, amount, interestRate, new Date(day, month, year)));
-       cleanFields();
-       showMessageDialog("El préstamo ha sido creado exitosamente");
+       String amount = tfAmount.getText();
+        
+        if(isNumeric(amount)){
+            double amountValue = Double.parseDouble(amount);
+            
+            if(amountValue > 0){
+                int day = Integer.parseInt(cbDay.getSelectedItem().toString());
+                int month = Integer.parseInt(cbMonth.getSelectedItem().toString());
+                int year = Integer.parseInt(cbYear.getSelectedItem().toString());
+                int term = Integer.parseInt(cbTerm.getSelectedItem().toString());
+                double interestRate = Double.parseDouble(cbInterestRate.getSelectedItem().toString()) / 100;
+                cleanFields();
+                controller.setLoan(new Loan(term, amountValue, interestRate, new Date(day, month, year)));
+                showMessageDialog("El préstamo ha sido creado exitosamente");
+            } else {
+                 showErrorDialog("El campo de monto no puede estar vacio, y debe ser númerico.");
+            }
+        } else {
+           showErrorDialog("El campo de monto no puede estar vacio, y debe ser númerico.");
+        }
     }//GEN-LAST:event_jbCreateActionPerformed
 
     private void jtLoansMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtLoansMouseClicked

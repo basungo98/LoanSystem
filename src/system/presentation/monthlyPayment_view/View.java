@@ -6,6 +6,7 @@ import system.presentation.monthlyPayment_view.*;
 import java.util.Observable;
 import javax.swing.JOptionPane;
 import system.logic.Client;
+import system.logic.Loan;
 import system.logic.MonthlyPayment;
 
 public class View extends javax.swing.JFrame implements java.util.Observer {
@@ -23,9 +24,10 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             showErrorDialog("No es posible ver la pantalla de prestamos.\nVerifique lo siguiente:\n1. El campo de cedula no puede estar vacio.\n2.No existe un cliente asociado a este numero de cedula.");
             controller.showLoanView(id);
         } else {
+            activeActions();
             clientId = id;
             loanIndex = index;
-            controller.getClient(id);
+            controller.getClient(id);  
         }
     }
     
@@ -54,13 +56,32 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         return model;
     }
     
+    public void disableActions(){
+        jbExtraordinaryPayments.setEnabled(false);
+        jbPaidMonth.setEnabled(false);
+        jbTotalPay.setEnabled(false);
+        tfExtraordinaryPayments.setEditable(false);
+    }
+    
+    public void activeActions(){
+        jbExtraordinaryPayments.setEnabled(true);
+        jbPaidMonth.setEnabled(true);
+        jbTotalPay.setEnabled(true);
+        tfExtraordinaryPayments.setEditable(true);
+    }
+    
     @Override
     public void update(Observable o, Object arg) {
         Client client = model.getClient();
         if (client != null) {
+            jlName.setText(client.getName());
             if(client.getLoans() != null && client.getLoans().size() > 0){
-                List<MonthlyPayment> mps = client.getLoans().get(loanIndex).getMonthlyPayments();
+                Loan loan = client.getLoans().get(loanIndex);
+                List<MonthlyPayment> mps = loan.getMonthlyPayments();
                 jtMonthlyPayments.setModel(new MonthlyPaymentTableModel(mps));
+                if(!loan.isActive()){
+                    disableActions();
+                }
             }
         }
     }
@@ -90,6 +111,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jpMain = new javax.swing.JPanel();
         jpHeader = new javax.swing.JPanel();
         jlTitle = new javax.swing.JLabel();
@@ -103,8 +125,12 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jbPaidMonth = new javax.swing.JButton();
         jbTotalPay = new javax.swing.JButton();
         jbBack = new javax.swing.JButton();
+        jlName = new javax.swing.JLabel();
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema de Pagos");
 
         jpMain.setBackground(new java.awt.Color(238, 248, 255));
         jpMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -157,7 +183,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jpMain.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 600, 370));
 
         jpUserInformation.setBackground(new java.awt.Color(238, 248, 255));
-        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pagos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
+        jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pagos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
 
         jbExtraordinaryPayments.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/payment.png"))); // NOI18N
         jbExtraordinaryPayments.setText("Pago Extraordinario");
@@ -228,6 +254,13 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         });
         jpMain.add(jbBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 620, 210, 55));
 
+        jlName.setBackground(new java.awt.Color(0, 0, 0));
+        jlName.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jlName.setForeground(new java.awt.Color(153, 204, 255));
+        jlName.setText("Daniela Mora Barquero");
+        jlName.setToolTipText("");
+        jpMain.add(jlName, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 260, 50));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -255,9 +288,13 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             double extPay = Double.parseDouble(extraordinaryPayment);
             
             if(extPay > 0){
-                controller.payExtraordinaryPayment( loanIndex, extPay);
-                showMessageDialog("El abono extraordinario ha sido realizado exitosamente.");
-                cleanFields();
+                boolean success = controller.payExtraordinaryPayment( loanIndex, extPay);
+                if(success) {
+                    showMessageDialog("El abono extraordinario ha sido realizado exitosamente.");
+                    cleanFields();
+                } else {
+                    showErrorDialog("El abono extraordinario no fue realizado.\nVerifique si el monto ingresado es correcto.");
+                }
             } else {
                  showErrorDialog("El campo de abono extraordinario no puede estar vacio, y debe ser númerico.");
             }
@@ -274,9 +311,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private void jbTotalPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbTotalPayActionPerformed
         controller.payTotal(loanIndex);
         showMessageDialog("La totalidad del préstamo ha sido cancelado exitosamente");
-        jbExtraordinaryPayments.setEnabled(false);
-        jbPaidMonth.setEnabled(false);
-        jbTotalPay.setEnabled(false);
+        disableActions();
     }//GEN-LAST:event_jbTotalPayActionPerformed
 
     /**
@@ -322,6 +357,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbBack;
     private javax.swing.JButton jbExtraordinaryPayments;
@@ -329,6 +365,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private javax.swing.JButton jbTotalPay;
     private javax.swing.JLabel jlExtraordinaryPayment;
     private javax.swing.JLabel jlLogo;
+    private javax.swing.JLabel jlName;
     private javax.swing.JLabel jlTitle;
     private javax.swing.JPanel jpHeader;
     private javax.swing.JPanel jpMain;
