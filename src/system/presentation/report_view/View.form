@@ -189,7 +189,7 @@
             <Component class="javax.swing.JButton" name="jbClientsReport">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/system/assets/icons/payment.png"/>
+                  <Image iconType="3" name="/system/assets/icons/clients-report.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Reporte de Clientes"/>
               </Properties>
@@ -210,7 +210,7 @@
             <Component class="javax.swing.JButton" name="jbLoansReport">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/system/assets/icons/appointment.png"/>
+                  <Image iconType="3" name="/system/assets/icons/loans-report.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Reporte de Prestamos"/>
               </Properties>
@@ -221,7 +221,7 @@
             <Component class="javax.swing.JButton" name="jbMPReport">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/system/assets/icons/gross.png"/>
+                  <Image iconType="3" name="/system/assets/icons/monthly-payments-report.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Reporte de Mensualidades"/>
               </Properties>

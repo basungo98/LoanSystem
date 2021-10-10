@@ -128,7 +128,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         jpUserInformation.setBackground(new java.awt.Color(238, 248, 255));
         jpUserInformation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Reportes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(153, 153, 153))); // NOI18N
 
-        jbClientsReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/payment.png"))); // NOI18N
+        jbClientsReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/clients-report.png"))); // NOI18N
         jbClientsReport.setText("Reporte de Clientes");
         jbClientsReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,7 +144,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
         jlIdText.setText("Cédula del cliente::");
 
-        jbLoansReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/appointment.png"))); // NOI18N
+        jbLoansReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/loans-report.png"))); // NOI18N
         jbLoansReport.setText("Reporte de Prestamos");
         jbLoansReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,7 +152,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             }
         });
 
-        jbMPReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/gross.png"))); // NOI18N
+        jbMPReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/system/assets/icons/monthly-payments-report.png"))); // NOI18N
         jbMPReport.setText("Reporte de Mensualidades");
         jbMPReport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
